@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"       # Exponemos MongoDB en el puerto 27017
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend        # El contexto de construcción está en el directorio backend
+      dockerfile: Dockerfile     # Especificamos el Dockerfile ubicado en backend
+    ports:
+      - "3001:3001"             # El backend estará expuesto en el puerto 3001
+    env_file:
+      - ./backend/.env          # Archivos .env para el backend
+    depends_on:
+      - mongo                   # El backend depende de MongoDB
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend       # El contexto de construcción está en el directorio frontend
+      dockerfile: Dockerfile     # Especificamos el Dockerfile ubicado en frontend
+    ports:
+      - "80:80"                 # El frontend estará expuesto en el puerto 80
+    depends_on:
+      - backend                 # El frontend depende de que el backend esté disponible
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
