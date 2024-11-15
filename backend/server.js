@@ -56,3 +56,7 @@ app.delete('/api/persons/:id', async (req, res) => {
 // Usa el puerto definido en el archivo .env
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Servidor corriendo en puerto ${port}`));
+
+app.get('/', (req, res) => {
+  res.send("Servidor backend está en funcionamiento.");
+});

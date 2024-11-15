@@ -12,7 +12,7 @@ const App = () => {
 
   const fetchPersons = async () => {
     try {
-      const response = await axios.get('https://4df0-181-80-210-133.ngrok-free.app/api/persons');
+      const response = await axios.get('http://localhost:3001/api/persons');
       setPersons(response.data);
     } catch (err) {
       console.error(err);
@@ -24,12 +24,12 @@ const App = () => {
     try {
       if (selectedId) {
         // Actualiza la persona
-        const response = await axios.put(`https://4df0-181-80-210-133.ngrok-free.app/api/persons/${selectedId}`, formData);
+        const response = await axios.put(`http://localhost:3001/api/persons/${selectedId}`, formData);
         setPersons(persons.map(person => (person._id === selectedId ? response.data : person)));
         setSelectedId(null);
       } else {
         // Crea una nueva persona
-        const response = await axios.post('https://4df0-181-80-210-133.ngrok-free.app/api/persons', formData);
+        const response = await axios.post('http://localhost:3001/api/persons', formData);
         setPersons([...persons, response.data]);
       }
       setFormData({ nombre: '', apellido: '', dni: '' });
@@ -46,7 +46,7 @@ const App = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://4df0-181-80-210-133.ngrok-free.app/api/persons/${id}`);
+      await axios.delete(`http://localhost:3001/api/persons/${id}`);
       setPersons(persons.filter(p => p._id !== id));
     } catch (err) {
       console.error(err);
